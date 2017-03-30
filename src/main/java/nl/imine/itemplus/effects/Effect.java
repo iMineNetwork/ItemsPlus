@@ -9,14 +9,15 @@ public abstract class Effect {
     protected EffectSource source;
     protected EffectTarget target;
     protected boolean isAlternate;
+    protected final float EXPERIENCE_COST;
+    private final short ITEM_DURABILITY;
 
-    private short itemDurability;
-
-    public Effect(EffectSource source, EffectTarget target, boolean isAlternate, short itemDurability) {
+    public Effect(EffectSource source, EffectTarget target, boolean isAlternate, short itemDurability, float experienceCost) {
         this.source = source;
         this.target = target;
         this.isAlternate = isAlternate;
-        this.itemDurability = itemDurability;
+        this.ITEM_DURABILITY = itemDurability;
+        this.EXPERIENCE_COST = experienceCost;
     }
 
     public EffectSource getSource() {
@@ -32,7 +33,7 @@ public abstract class Effect {
     }
 
     public short getItemDurability() {
-        return itemDurability;
+        return ITEM_DURABILITY;
     }
 
     public abstract void applyEffect(Player player);

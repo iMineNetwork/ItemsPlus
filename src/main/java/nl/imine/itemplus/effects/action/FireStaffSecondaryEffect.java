@@ -17,16 +17,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
+import nl.imine.itemplus.effects.ParticleAnimation;
 
 public class FireStaffSecondaryEffect extends Effect {
 
     public static FireStaffSecondaryEffect setup() {
-        return new FireStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true, (short) 17);
+        return new FireStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true, (short) 18, 0.2f);
     }
 
-    private FireStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability) {
-        super(source, target, isAlternate, durability);
+    private FireStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
+        super(source, target, isAlternate, durability, experienceCost);
     }
 
     @Override
@@ -39,10 +39,16 @@ public class FireStaffSecondaryEffect extends Effect {
 
             ScheduledFuture[] task = new ScheduledFuture[1];
             ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-            task[0] = scheduledExecutorService.scheduleWithFixedDelay(new EffectClass(task, origin, target.getEffectArea(origin, 5)), 0L, 25L, TimeUnit.MILLISECONDS);
+            task[0] = scheduledExecutorService.scheduleWithFixedDelay(new ParticleAnimation(task, origin, target.getEffectArea(origin, 5), Particle.FLAME, 100), 0L, 25L, TimeUnit.MILLISECONDS);
             origin.getWorld().playSound(origin, Sound.ITEM_FIRECHARGE_USE, 1.0f, 1.0f);
 
             targets.forEach(target -> target.setFireTicks(100));
+            
+            //making sure the potionEffects overwrite the old ones
+            player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE); 
+            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE); 
+            player.removePotionEffect(PotionEffectType.SLOW); 
+            
             player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, true, false), true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 4, true, false), true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255, true, false), true);
@@ -53,42 +59,6 @@ public class FireStaffSecondaryEffect extends Effect {
                 } else {
                     player.setExp(player.getExp() - 0.2f);
                 }
-            }
-        }
-    }
-
-    private static class EffectClass implements Runnable {
-
-        private ScheduledFuture[] task;
-        private Location origin;
-        private List<Location> destinations;
-
-        private final int animationFrames = 20;
-        private int currentFrame = 0;
-
-        public EffectClass(ScheduledFuture[] task, Location origin, List<Location> destinations) {
-            this.task = task;
-            this.origin = origin;
-            this.destinations = destinations;
-        }
-
-        @Override
-        public void run() {
-            currentFrame++;
-            Bukkit.getScheduler().runTask(BukkitStarter.getInstance(), () -> {
-                for (Location location : destinations) {
-                    double xDiff = origin.getX() - location.getX();
-                    double zDiff = origin.getZ() - location.getZ();
-                    Location loc = new Location(origin.getWorld(),
-                            origin.getX() + (xDiff / animationFrames) * currentFrame,
-                            origin.getY(),
-                            origin.getZ() + (zDiff / animationFrames) * currentFrame);
-                    location.getWorld().spawnParticle(Particle.FLAME, loc,
-                            1, 0, 0, 0, 0.1);
-                }
-            });
-            if (currentFrame >= animationFrames) {
-                task[0].cancel(false);
             }
         }
     }

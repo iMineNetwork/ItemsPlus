@@ -14,20 +14,20 @@ import org.bukkit.entity.Player;
 public class FireStaffPrimaryEffect extends Effect {
 
     public static FireStaffPrimaryEffect setup() {
-        return new FireStaffPrimaryEffect(new PlayerEyeSource(), null, false, (short) 17);
+        return new FireStaffPrimaryEffect(new PlayerEyeSource(), null, false, (short) 18, 0.2f);
     }
 
-    private FireStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability) {
-        super(source, target, isAlternate, durability);
+    private FireStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
+        super(source, target, isAlternate, durability, experienceCost);
     }
 
     @Override
     public void applyEffect(Player player) {
         if (player.getExp() >= 0.2 || player.getLevel() >= 1 || player.getGameMode().equals(GameMode.CREATIVE)) {
             Location origin = source.getSource(player).add(player.getLocation().getDirection().multiply(1.1));
-            Fireball entity = (Fireball)origin.getWorld().spawnEntity(origin, EntityType.FIREBALL);
+            Fireball entity = (Fireball) origin.getWorld().spawnEntity(origin, EntityType.FIREBALL);
             entity.setYield(0);
-
+            entity.setShooter(player);
             entity.setVelocity(player.getLocation().getDirection());
 
             origin.getWorld().playSound(origin, Sound.ITEM_FIRECHARGE_USE, 1.0f, 1.0f);
