@@ -2,7 +2,6 @@ package nl.imine.itemplus.effects.target;
 
 import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.ArrayList;

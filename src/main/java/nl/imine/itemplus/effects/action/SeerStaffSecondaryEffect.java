@@ -1,23 +1,13 @@
 package nl.imine.itemplus.effects.action;
 
-import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerSource;
 import nl.imine.itemplus.effects.target.CircleAreaOfEffectTarget;
 import nl.imine.itemplus.effects.target.EffectTarget;
-import org.bukkit.*;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.GameMode;
 
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import nl.imine.itemplus.effects.ParticleAnimation;
+import org.bukkit.entity.Player;
 
 public class SeerStaffSecondaryEffect extends Effect {
 

@@ -1,6 +1,5 @@
 package nl.imine.itemplus.effects.action;
 
-import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerSource;
@@ -47,15 +46,15 @@ public class HealerStaffSecondaryEffect extends Effect {
             }
         }
 
-        Location origin = source.getSource(player);
+        Location location = source.getSource(player);
 
-        List<LivingEntity> targets = target.findTargets(origin, player.getWorld().getLivingEntities());
+        List<LivingEntity> targets = target.findTargets(location, player.getWorld().getLivingEntities());
         targets.remove(player);
 
         ScheduledFuture[] task = new ScheduledFuture[1];
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        task[0] = scheduledExecutorService.scheduleWithFixedDelay(new ParticleAnimation(task, origin, target.getEffectArea(origin, 50), Particle.HEART, 100), 0L, 25L, TimeUnit.MILLISECONDS);
-        origin.getWorld().playSound(origin, Sound.BLOCK_SNOW_BREAK, 1.0f, 1.0f);
+        task[0] = scheduledExecutorService.scheduleWithFixedDelay(new ParticleAnimation(task, location, target.getEffectArea(location, 50), Particle.HEART, 100), 0L, 25L, TimeUnit.MILLISECONDS);
+        location.getWorld().playSound(location, Sound.BLOCK_SNOW_BREAK, 1.0f, 1.0f);
 
         targets.stream()
                 .filter(target -> target instanceof Player)
@@ -65,6 +64,6 @@ public class HealerStaffSecondaryEffect extends Effect {
                 });
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 0, true, false), true);
 
-        origin.getWorld().playSound(origin, Sound.ITEM_TOTEM_USE, 1.0f, 1.0f);
+        location.getWorld().playSound(location, Sound.ITEM_TOTEM_USE, 1.0f, 1.0f);
     }
 }

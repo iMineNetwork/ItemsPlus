@@ -1,6 +1,5 @@
 package nl.imine.itemplus.effects.action;
 
-import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerSource;

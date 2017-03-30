@@ -1,26 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.imine.itemplus.effects.action;
 
-import java.util.List;
-import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerEyeSource;
 import nl.imine.itemplus.effects.target.EffectTarget;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
 
 /**
  *
@@ -53,7 +38,7 @@ public class SeerStaffPrimaryEffect extends Effect {
                 player.setExp(player.getExp() - EXPERIENCE_COST);
             }
         }
-        
+
         //atm it's not possible to make the effects
     }
 }
