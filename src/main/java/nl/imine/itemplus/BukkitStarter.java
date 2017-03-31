@@ -12,7 +12,7 @@ public class BukkitStarter extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         EffectListener.init();
-        this.getCommand(".itemsplus").setExecutor(new ItemsplusCommand());
+        this.getCommand("itemsplus").setExecutor(new ItemsplusCommand());
     }
 
     @Override

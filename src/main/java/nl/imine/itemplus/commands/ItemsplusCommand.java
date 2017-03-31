@@ -51,7 +51,7 @@ public class ItemsplusCommand implements CommandExecutor {
             items[i].setDurability((short) (i + 17));
             ItemMeta itemMeta = items[i].getItemMeta();
             itemMeta.setUnbreakable(true);
-            items[i].setItemMeta(itemMeta);
+            items[i].setItemMeta(itemMeta); //the effectmanager will only return an effect for a valid staff, and a valid staff needs unbreakable. 
             String displayName = EffectManager.getEffect(items[i], false).toString();
             displayName = displayName.replace("nl.imine.itemplus.effects.action.", "");
             displayName = displayName.substring(0, displayName.indexOf("PrimaryEffect"));
