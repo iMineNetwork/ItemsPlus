@@ -1,5 +1,6 @@
 package nl.imine.itemplus;
 
+import nl.imine.itemplus.commands.ItemsplusCommand;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,6 +12,7 @@ public class BukkitStarter extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         EffectListener.init();
+        this.getCommand(".itemsplus").setExecutor(new ItemsplusCommand());
     }
 
     @Override
@@ -18,7 +20,7 @@ public class BukkitStarter extends JavaPlugin {
         plugin = null;
     }
 
-    public static Plugin getInstance(){
+    public static Plugin getInstance() {
         return plugin;
     }
 }

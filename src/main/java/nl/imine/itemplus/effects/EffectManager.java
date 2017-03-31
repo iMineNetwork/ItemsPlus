@@ -12,29 +12,28 @@ import nl.imine.itemplus.effects.action.HealerStaffPrimaryEffect;
 import nl.imine.itemplus.effects.action.HealerStaffSecondaryEffect;
 import nl.imine.itemplus.effects.action.IceStaffPrimaryEffect;
 import nl.imine.itemplus.effects.action.IceStaffSecondaryEffect;
-import nl.imine.itemplus.effects.action.SeerStaffPrimaryEffect;
 
 public class EffectManager {
 
-    private final List<Effect> effects = new ArrayList<>();
+    private static final List<Effect> EFFECTS = new ArrayList<>();
 
     public static EffectManager init() {
         EffectManager effectManager = new EffectManager();
-        effectManager.registerEffect(EnderStaffPrimaryEffect.setup());
-        effectManager.registerEffect(EnderStaffSecondaryEffect.setup());
-        effectManager.registerEffect(FireStaffSecondaryEffect.setup());
-        effectManager.registerEffect(FireStaffPrimaryEffect.setup());
-        effectManager.registerEffect(HealerStaffPrimaryEffect.setup());
-        effectManager.registerEffect(HealerStaffSecondaryEffect.setup());
-        effectManager.registerEffect(IceStaffSecondaryEffect.setup());
-        effectManager.registerEffect(IceStaffPrimaryEffect.setup());
+        EffectManager.registerEffect(EnderStaffPrimaryEffect.setup());
+        EffectManager.registerEffect(EnderStaffSecondaryEffect.setup());
+        EffectManager.registerEffect(FireStaffSecondaryEffect.setup());
+        EffectManager.registerEffect(FireStaffPrimaryEffect.setup());
+        EffectManager.registerEffect(HealerStaffPrimaryEffect.setup());
+        EffectManager.registerEffect(HealerStaffSecondaryEffect.setup());
+        EffectManager.registerEffect(IceStaffSecondaryEffect.setup());
+        EffectManager.registerEffect(IceStaffPrimaryEffect.setup());
 //        effectManager.registerEffect(SeerStaffPrimaryEffect.setup());
 //        effectManager.registerEffect(SeerStaffSecondaryEffect.setup());
         return effectManager;
     }
 
-    public void registerEffect(Effect effect) {
-        effects.add(effect);
+    public static void registerEffect(Effect effect) {
+        EFFECTS.add(effect);
     }
 
     /**
@@ -44,8 +43,8 @@ public class EffectManager {
      * @param isSneaking
      * @return the {@link Effect} that origins from this {@link ItemStack}
      */
-    public Effect getEffect(ItemStack itemStack, boolean isSneaking) {
-        return effects.stream()
+    public static Effect getEffect(ItemStack itemStack, boolean isSneaking) {
+        return EFFECTS.stream()
                 .filter(effect -> itemStack.getItemMeta().isUnbreakable())
                 .filter(effect -> itemStack.getDurability() == effect.getItemDurability())
                 .filter(effect -> isSneaking == effect.isAlternate)
@@ -53,7 +52,7 @@ public class EffectManager {
                 .orElse(null);
     }
 
-    public boolean hasEffect(ItemStack itemStack, boolean isSneaking) {
-        return effects.stream().anyMatch(effect -> (effect.getItemDurability() == itemStack.getDurability() && effect.isAlternate == isSneaking));
+    public static boolean hasEffect(ItemStack itemStack, boolean isSneaking) {
+        return EFFECTS.stream().anyMatch(effect -> (effect.getItemDurability() == itemStack.getDurability() && effect.isAlternate == isSneaking));
     }
 }

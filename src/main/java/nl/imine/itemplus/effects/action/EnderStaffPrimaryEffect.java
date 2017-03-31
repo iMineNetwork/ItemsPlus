@@ -10,6 +10,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -57,5 +58,7 @@ public class EnderStaffPrimaryEffect extends Effect {
 
         Location particleLocation = new Location(destination.getWorld(), destination.getX(), destination.getY() - 1, destination.getZ());
         player.getWorld().spawnParticle(Particle.DRAGON_BREATH, particleLocation, 150, 0, 0, 0, 0.1);
+
+        destination.getWorld().playSound(destination, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
     }
 }
