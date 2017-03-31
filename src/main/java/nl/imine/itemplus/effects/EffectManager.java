@@ -6,6 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import nl.imine.itemplus.effects.action.EnderStaffPrimaryEffect;
+import nl.imine.itemplus.effects.action.EnderStaffSecondaryEffect;
 import nl.imine.itemplus.effects.action.HealerStaffPrimaryEffect;
 import nl.imine.itemplus.effects.action.HealerStaffSecondaryEffect;
 import nl.imine.itemplus.effects.action.IceStaffPrimaryEffect;
@@ -18,6 +20,8 @@ public class EffectManager {
 
     public static EffectManager init() {
         EffectManager effectManager = new EffectManager();
+        effectManager.registerEffect(EnderStaffPrimaryEffect.setup());
+        effectManager.registerEffect(EnderStaffSecondaryEffect.setup());
         effectManager.registerEffect(FireStaffSecondaryEffect.setup());
         effectManager.registerEffect(FireStaffPrimaryEffect.setup());
         effectManager.registerEffect(HealerStaffPrimaryEffect.setup());
