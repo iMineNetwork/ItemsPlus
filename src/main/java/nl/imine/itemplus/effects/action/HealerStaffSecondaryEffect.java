@@ -16,16 +16,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.ParticleAnimation;
+import nl.imine.itemplus.settings.Setting;
 
 public class HealerStaffSecondaryEffect extends Effect {
 
+    private static final String HEALERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.HEALERSTAFF_NAME);
+    private static final short HEALERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.HEALERSTAFF_DURABILITY);
+    private static final float HEALERSTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.HEALERSTAFF_SECONDARY_XP_COST);
+
     public static HealerStaffSecondaryEffect setup() {
-        return new HealerStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true, (short) 19, 0.2f);
+        return new HealerStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
     }
 
-    private HealerStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private HealerStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, HEALERSTAFF_DURABILITY, HEALERSTAFF_SECONDARY_XP_COST, HEALERSTAFF_NAME);
     }
 
     @Override

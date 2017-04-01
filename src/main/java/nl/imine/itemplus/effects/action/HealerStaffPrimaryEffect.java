@@ -1,9 +1,11 @@
 package nl.imine.itemplus.effects.action;
 
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerEyeSource;
 import nl.imine.itemplus.effects.target.EffectTarget;
+import nl.imine.itemplus.settings.Setting;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -17,12 +19,16 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class HealerStaffPrimaryEffect extends Effect {
 
+    private static final String HEALERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.HEALERSTAFF_NAME);
+    private static final short HEALERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.HEALERSTAFF_DURABILITY);
+    private static final float HEALERSTAFF_PRIMARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.HEALERSTAFF_PRIMARY_XP_COST);
+
     public static HealerStaffPrimaryEffect setup() {
-        return new HealerStaffPrimaryEffect(new PlayerEyeSource(), null, false, (short) 19, 0.2f);
+        return new HealerStaffPrimaryEffect(new PlayerEyeSource(), null, false);
     }
 
-    private HealerStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private HealerStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, HEALERSTAFF_DURABILITY, HEALERSTAFF_PRIMARY_XP_COST, HEALERSTAFF_NAME);
     }
 
     @Override
@@ -45,7 +51,7 @@ public class HealerStaffPrimaryEffect extends Effect {
 
         Location location = source.getSource(player).add(player.getLocation().getDirection().multiply(1.1));
 
-        player.removePotionEffect(PotionEffectType.ABSORPTION); 
+        player.removePotionEffect(PotionEffectType.ABSORPTION);
         player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 1200, player.getFoodLevel() / 2 - 1, true, true), true);
 
         location.getWorld().playSound(location, Sound.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 1.0f, 1.0f);

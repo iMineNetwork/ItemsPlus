@@ -16,16 +16,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.ParticleAnimation;
+import nl.imine.itemplus.settings.Setting;
 
 public class IceStaffSecondaryEffect extends Effect {
 
+    private static final String ICESTAFF_NAME = BukkitStarter.getSettings().getString(Setting.ICESTAFF_NAME);
+    private static final short ICESTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.ICESTAFF_DURABILITY);
+    private static final float ICESTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.ICESTAFF_SECONDARY_XP_COST);
+
     public static IceStaffSecondaryEffect setup() {
-        return new IceStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true, (short) 20, 0.2f);
+        return new IceStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
     }
 
-    private IceStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private IceStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, ICESTAFF_DURABILITY, ICESTAFF_SECONDARY_XP_COST, ICESTAFF_NAME);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class IceStaffSecondaryEffect extends Effect {
             target.removePotionEffect(PotionEffectType.SLOW); //making sure the potionEffect overwrites the old one
             target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1, true, true, Color.SILVER));
         });
-        
+
         player.removePotionEffect(PotionEffectType.SPEED); //making sure the potionEffect overwrites the old one
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 0, true, false), true);
 

@@ -1,23 +1,29 @@
 package nl.imine.itemplus.effects.action;
 
 import net.md_5.bungee.api.ChatColor;
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerSource;
 import nl.imine.itemplus.effects.target.CircleAreaOfEffectTarget;
 import nl.imine.itemplus.effects.target.EffectTarget;
+import nl.imine.itemplus.settings.Setting;
 import org.bukkit.GameMode;
 
 import org.bukkit.entity.Player;
 
 public class EnderStaffSecondaryEffect extends Effect {
 
+    private static final String ENDERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.ENDERSTAFF_NAME);
+    private static final short ENDERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.ENDERSTAFF_DURABILITY);
+    private static final float ENDERSTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.ENDERSTAFF_SECONDARY_XP_COST);
+
     public static EnderStaffSecondaryEffect setup() {
-        return new EnderStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true, (short) 17, 0.2f);
+        return new EnderStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
     }
 
-    private EnderStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private EnderStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, ENDERSTAFF_DURABILITY, ENDERSTAFF_SECONDARY_XP_COST, ENDERSTAFF_NAME);
     }
 
     @Override

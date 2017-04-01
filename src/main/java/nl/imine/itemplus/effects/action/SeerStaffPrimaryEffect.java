@@ -1,9 +1,11 @@
 package nl.imine.itemplus.effects.action;
 
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerEyeSource;
 import nl.imine.itemplus.effects.target.EffectTarget;
+import nl.imine.itemplus.settings.Setting;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -13,12 +15,16 @@ import org.bukkit.entity.Player;
  */
 public class SeerStaffPrimaryEffect extends Effect {
 
+    private static final String SEERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.SEERSTAFF_NAME);
+    private static final short SEERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.SEERSTAFF_DURABILITY);
+    private static final float SEERSTAFF_PRIMARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.SEERSTAFF_PRIMARY_XP_COST);
+    
     public static SeerStaffPrimaryEffect setup() {
-        return new SeerStaffPrimaryEffect(new PlayerEyeSource(), null, false, (short) 21, 0.2f);
+        return new SeerStaffPrimaryEffect(new PlayerEyeSource(), null, false);
     }
 
-    private SeerStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private SeerStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, SEERSTAFF_DURABILITY, SEERSTAFF_PRIMARY_XP_COST, SEERSTAFF_NAME);
     }
 
     @Override

@@ -12,12 +12,16 @@ public abstract class Effect {
     protected final float EXPERIENCE_COST;
     private final short ITEM_DURABILITY;
 
-    public Effect(EffectSource source, EffectTarget target, boolean isAlternate, short itemDurability, float experienceCost) {
+    protected final String NAME;
+
+    public Effect(EffectSource source, EffectTarget target, boolean isAlternate, short itemDurability, float experienceCost, String NAME) {
+        System.out.println("staff with durability: " + itemDurability + ", experienceCost: " + experienceCost + ", NAME:" + NAME);
         this.source = source;
         this.target = target;
         this.isAlternate = isAlternate;
         this.ITEM_DURABILITY = itemDurability;
         this.EXPERIENCE_COST = experienceCost;
+        this.NAME = NAME;
     }
 
     public EffectSource getSource() {
@@ -28,12 +32,16 @@ public abstract class Effect {
         return target;
     }
 
-    public boolean isAlternate(){
+    public boolean isAlternate() {
         return isAlternate;
     }
 
     public short getItemDurability() {
         return ITEM_DURABILITY;
+    }
+
+    public String getStaffName() {
+        return NAME;
     }
 
     public abstract void applyEffect(Player player);

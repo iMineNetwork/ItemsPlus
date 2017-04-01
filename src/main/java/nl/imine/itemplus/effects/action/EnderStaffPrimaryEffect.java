@@ -1,17 +1,16 @@
 package nl.imine.itemplus.effects.action;
 
 import java.util.HashSet;
-import java.util.Set;
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerEyeSource;
 import nl.imine.itemplus.effects.target.EffectTarget;
+import nl.imine.itemplus.settings.Setting;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -20,12 +19,19 @@ import org.bukkit.entity.Player;
  */
 public class EnderStaffPrimaryEffect extends Effect {
 
+    private static final String ENDERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.ENDERSTAFF_NAME);
+    private static final short ENDERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.ENDERSTAFF_DURABILITY);
+    private static final float ENDERSTAFF_PRIMARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.ENDERSTAFF_PRIMARY_XP_COST);
+    private static final int ENDERSTAFF_MAX_TELEPORT_DISTANCE = BukkitStarter.getSettings().getInt(Setting.ENDERSTAFF_PRIMARY_MAX_TELEPORT_DISTANCE);
+    private static final boolean ENDERSTAFF_RESET_FALLDISTANCE_ON_TELEPORT = BukkitStarter.getSettings().getBoolean(Setting.ENDERSTAFF_RESET_FALLDISTANCE_ON_TELEPORT);
+    private static final int ENDERSTAFF_PARTICLES = BukkitStarter.getSettings().getInt(Setting.ENDERSTAFF_PRIMARY_PARTICLES);
+
     public static EnderStaffPrimaryEffect setup() {
-        return new EnderStaffPrimaryEffect(new PlayerEyeSource(), null, false, (short) 17, 0.2f);
+        return new EnderStaffPrimaryEffect(new PlayerEyeSource(), null, false);
     }
 
-    private EnderStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private EnderStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, ENDERSTAFF_DURABILITY, ENDERSTAFF_PRIMARY_XP_COST, ENDERSTAFF_NAME);
     }
 
     @Override
@@ -46,10 +52,11 @@ public class EnderStaffPrimaryEffect extends Effect {
             }
         }
 
-        player.setFallDistance(0f);
-
+        if (ENDERSTAFF_RESET_FALLDISTANCE_ON_TELEPORT) {
+            player.setFallDistance(0f);
+        }
         Location destination;
-        destination = player.getTargetBlock((HashSet<Byte>) null, 100).getLocation();
+        destination = player.getTargetBlock((HashSet<Byte>) null, ENDERSTAFF_MAX_TELEPORT_DISTANCE).getLocation();
         destination.setY(destination.getY() + 1); //preventing the player from getting getting teleported 1 block into the ground
         destination.setPitch(player.getLocation().getPitch());
         destination.setYaw(player.getLocation().getYaw());
@@ -57,8 +64,12 @@ public class EnderStaffPrimaryEffect extends Effect {
         player.teleport(destination);
 
         Location particleLocation = new Location(destination.getWorld(), destination.getX(), destination.getY() - 1, destination.getZ());
-        player.getWorld().spawnParticle(Particle.DRAGON_BREATH, particleLocation, 150, 0, 0, 0, 0.1);
+        player.getWorld().spawnParticle(Particle.DRAGON_BREATH, particleLocation, ENDERSTAFF_PARTICLES, 0, 0, 0, 0.1);
 
         destination.getWorld().playSound(destination, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
+    }
+
+    public void setupConfiguration() {
+
     }
 }

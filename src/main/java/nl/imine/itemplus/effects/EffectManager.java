@@ -12,28 +12,45 @@ import nl.imine.itemplus.effects.action.HealerStaffPrimaryEffect;
 import nl.imine.itemplus.effects.action.HealerStaffSecondaryEffect;
 import nl.imine.itemplus.effects.action.IceStaffPrimaryEffect;
 import nl.imine.itemplus.effects.action.IceStaffSecondaryEffect;
+import nl.imine.itemplus.effects.action.SeerStaffPrimaryEffect;
+import nl.imine.itemplus.effects.action.SeerStaffSecondaryEffect;
 
 public class EffectManager {
 
-    private static final List<Effect> EFFECTS = new ArrayList<>();
+    private static EffectManager instance;
+
+    private final List<Effect> EFFECTS = new ArrayList<>();
 
     public static EffectManager init() {
-        EffectManager effectManager = new EffectManager();
-        EffectManager.registerEffect(EnderStaffPrimaryEffect.setup());
-        EffectManager.registerEffect(EnderStaffSecondaryEffect.setup());
-        EffectManager.registerEffect(FireStaffSecondaryEffect.setup());
-        EffectManager.registerEffect(FireStaffPrimaryEffect.setup());
-        EffectManager.registerEffect(HealerStaffPrimaryEffect.setup());
-        EffectManager.registerEffect(HealerStaffSecondaryEffect.setup());
-        EffectManager.registerEffect(IceStaffSecondaryEffect.setup());
-        EffectManager.registerEffect(IceStaffPrimaryEffect.setup());
-//        effectManager.registerEffect(SeerStaffPrimaryEffect.setup());
-//        effectManager.registerEffect(SeerStaffSecondaryEffect.setup());
-        return effectManager;
+        instance = new EffectManager();
+        try {
+            instance.registerEffect(EnderStaffPrimaryEffect.setup());
+            instance.registerEffect(EnderStaffSecondaryEffect.setup());
+            instance.registerEffect(FireStaffPrimaryEffect.setup());
+            instance.registerEffect(FireStaffSecondaryEffect.setup());
+            instance.registerEffect(HealerStaffPrimaryEffect.setup());
+            instance.registerEffect(HealerStaffSecondaryEffect.setup());
+            instance.registerEffect(IceStaffSecondaryEffect.setup());
+            instance.registerEffect(IceStaffPrimaryEffect.setup());
+            instance.registerEffect(SeerStaffPrimaryEffect.setup());
+            instance.registerEffect(SeerStaffSecondaryEffect.setup());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+        return instance;
     }
 
-    public static void registerEffect(Effect effect) {
+    public static EffectManager getEffectManager() {
+        return instance;
+    }
+
+    public void registerEffect(Effect effect) {
         EFFECTS.add(effect);
+    }
+
+    public List<Effect> getEffects() {
+        return EFFECTS;
     }
 
     /**
@@ -43,7 +60,7 @@ public class EffectManager {
      * @param isSneaking
      * @return the {@link Effect} that origins from this {@link ItemStack}
      */
-    public static Effect getEffect(ItemStack itemStack, boolean isSneaking) {
+    public Effect getEffect(ItemStack itemStack, boolean isSneaking) {
         return EFFECTS.stream()
                 .filter(effect -> itemStack.getItemMeta().isUnbreakable())
                 .filter(effect -> itemStack.getDurability() == effect.getItemDurability())
@@ -52,7 +69,7 @@ public class EffectManager {
                 .orElse(null);
     }
 
-    public static boolean hasEffect(ItemStack itemStack, boolean isSneaking) {
+    public boolean hasEffect(ItemStack itemStack, boolean isSneaking) {
         return EFFECTS.stream().anyMatch(effect -> (effect.getItemDurability() == itemStack.getDurability() && effect.isAlternate == isSneaking));
     }
 }

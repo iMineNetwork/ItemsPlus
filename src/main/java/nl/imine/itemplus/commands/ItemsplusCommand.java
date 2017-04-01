@@ -44,7 +44,7 @@ public class ItemsplusCommand implements CommandExecutor {
 
         Player player = (Player) cs;
 
-        ItemStack[] items = new ItemStack[4];
+        ItemStack[] items = new ItemStack[5];
 
         for (int i = 0; i < items.length; i++) {
             items[i] = new ItemStack(Material.DIAMOND_HOE);
@@ -52,9 +52,7 @@ public class ItemsplusCommand implements CommandExecutor {
             ItemMeta itemMeta = items[i].getItemMeta();
             itemMeta.setUnbreakable(true);
             items[i].setItemMeta(itemMeta); //the effectmanager will only return an effect for a valid staff, and a valid staff needs unbreakable. 
-            String displayName = EffectManager.getEffect(items[i], false).toString();
-            displayName = displayName.replace("nl.imine.itemplus.effects.action.", "");
-            displayName = displayName.substring(0, displayName.indexOf("PrimaryEffect"));
+            String displayName = EffectManager.getEffectManager().getEffect(items[i], false).getStaffName();
             itemMeta.setDisplayName(ChatColor.WHITE + displayName);
             items[i].setItemMeta(itemMeta);
         }

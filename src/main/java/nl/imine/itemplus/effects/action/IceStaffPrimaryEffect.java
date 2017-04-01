@@ -1,9 +1,11 @@
 package nl.imine.itemplus.effects.action;
 
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerEyeSource;
 import nl.imine.itemplus.effects.target.EffectTarget;
+import nl.imine.itemplus.settings.Setting;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -17,12 +19,16 @@ import org.bukkit.entity.Snowball;
  */
 public class IceStaffPrimaryEffect extends Effect {
 
+    private static final String ICESTAFF_NAME = BukkitStarter.getSettings().getString(Setting.ICESTAFF_NAME);
+    private static final short ICESTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.ICESTAFF_DURABILITY);
+    private static final float ICESTAFF_PRIMARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.ICESTAFF_PRIMARY_XP_COST);
+
     public static IceStaffPrimaryEffect setup() {
-        return new IceStaffPrimaryEffect(new PlayerEyeSource(), null, false, (short) 20, 0.2f);
+        return new IceStaffPrimaryEffect(new PlayerEyeSource(), null, false);
     }
 
-    private IceStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private IceStaffPrimaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, ICESTAFF_DURABILITY, ICESTAFF_PRIMARY_XP_COST, ICESTAFF_NAME);
     }
 
     @Override
@@ -50,7 +56,7 @@ public class IceStaffPrimaryEffect extends Effect {
 
         entity.setVelocity(player.getLocation().getDirection());
         entity.addScoreboardTag("iceStaffSnowball");
-        
+
         location.getWorld().playSound(location, Sound.BLOCK_SNOW_BREAK, 1.0f, 1.0f);
     }
 }

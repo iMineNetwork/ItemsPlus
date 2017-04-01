@@ -35,6 +35,10 @@ public class EffectListener implements Listener {
         this.effectManager = effectManager;
     }
 
+    public EffectManager getEffectManager() {
+        return effectManager;
+    }
+
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent evt) {
         if (evt.getItem() != null) {

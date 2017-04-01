@@ -16,16 +16,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.ParticleAnimation;
+import nl.imine.itemplus.settings.Setting;
 
 public class FireStaffSecondaryEffect extends Effect {
 
+    private static final String FIRESTAFF_NAME = BukkitStarter.getSettings().getString(Setting.FIRESTAFF_NAME);
+    private static final short FIRESTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.FIRESTAFF_DURABILITY);
+    private static final float FIRESTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.FIRESTAFF_SECONDARY_XP_COST);
+    
     public static FireStaffSecondaryEffect setup() {
-        return new FireStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true, (short) 18, 0.2f);
+        return new FireStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
     }
 
-    private FireStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate, short durability, float experienceCost) {
-        super(source, target, isAlternate, durability, experienceCost);
+    private FireStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+         super(source, target, isAlternate, FIRESTAFF_DURABILITY, FIRESTAFF_SECONDARY_XP_COST, FIRESTAFF_NAME);
     }
 
     @Override
@@ -42,12 +48,12 @@ public class FireStaffSecondaryEffect extends Effect {
             origin.getWorld().playSound(origin, Sound.ITEM_FIRECHARGE_USE, 1.0f, 1.0f);
 
             targets.forEach(target -> target.setFireTicks(100));
-            
+
             //making sure the potionEffects overwrite the old ones
-            player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE); 
-            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE); 
-            player.removePotionEffect(PotionEffectType.SLOW); 
-            
+            player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+            player.removePotionEffect(PotionEffectType.SLOW);
+
             player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, true, false), true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 4, true, false), true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255, true, false), true);
