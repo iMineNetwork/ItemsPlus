@@ -68,7 +68,6 @@ public class EnderStaffPrimaryEffect extends Effect {
 
         destination.getWorld().playSound(destination, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);
     }
-
     public void setupConfiguration() {
 
     }

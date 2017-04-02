@@ -25,13 +25,15 @@ public class FireStaffSecondaryEffect extends Effect {
     private static final String FIRESTAFF_NAME = BukkitStarter.getSettings().getString(Setting.FIRESTAFF_NAME);
     private static final short FIRESTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.FIRESTAFF_DURABILITY);
     private static final float FIRESTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.FIRESTAFF_SECONDARY_XP_COST);
-    
+    private static final int FIRESTAFF_SECONDARY_FIRETICKS = BukkitStarter.getSettings().getInt(Setting.FIRESTAFF_SECONDARY_FIRETICKS);
+    private static final PotionEffect[] FIRESTAFF_SECONDARY_POTIONEFFECTS = BukkitStarter.getSettings().getPotionEffects(Setting.FIRESTAFF_SECONDARY_POTIONEFFECTS);
+
     public static FireStaffSecondaryEffect setup() {
         return new FireStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
     }
 
     private FireStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
-         super(source, target, isAlternate, FIRESTAFF_DURABILITY, FIRESTAFF_SECONDARY_XP_COST, FIRESTAFF_NAME);
+        super(source, target, isAlternate, FIRESTAFF_DURABILITY, FIRESTAFF_SECONDARY_XP_COST, FIRESTAFF_NAME);
     }
 
     @Override
@@ -47,9 +49,14 @@ public class FireStaffSecondaryEffect extends Effect {
             task[0] = scheduledExecutorService.scheduleWithFixedDelay(new ParticleAnimation(task, origin, target.getEffectArea(origin, 5), Particle.FLAME, 100), 0L, 25L, TimeUnit.MILLISECONDS);
             origin.getWorld().playSound(origin, Sound.ITEM_FIRECHARGE_USE, 1.0f, 1.0f);
 
-            targets.forEach(target -> target.setFireTicks(100));
+            targets.forEach(target -> target.setFireTicks(FIRESTAFF_SECONDARY_FIRETICKS));
 
             //making sure the potionEffects overwrite the old ones
+            for (PotionEffect effect : FIRESTAFF_SECONDARY_POTIONEFFECTS) {
+                player.removePotionEffect(effect.getType());
+                player.addPotionEffect(effect);
+            }
+
             player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
             player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
             player.removePotionEffect(PotionEffectType.SLOW);
@@ -57,6 +64,7 @@ public class FireStaffSecondaryEffect extends Effect {
             player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, true, false), true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 4, true, false), true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255, true, false), true);
+
             if (!player.getGameMode().equals(GameMode.CREATIVE)) {
                 if (player.getExp() < 0.2) {
                     player.setLevel(player.getLevel() - 1);

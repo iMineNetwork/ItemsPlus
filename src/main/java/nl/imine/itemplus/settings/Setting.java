@@ -18,6 +18,8 @@ public final class Setting {
     public static final String FIRESTAFF_PRIMARY_VELOCITY_MULTIPLIER = "staffs.firestaff.primary.velocity";
     public static final String FIRESTAFF_SECONDARY_XP_COST = "staffs.firestaff.secondary.xp";
     public static final String FIRESTAFF_SECONDARY_PARTICLES = "staffs.firestaff.secondary.particles";
+    public static final String FIRESTAFF_SECONDARY_FIRETICKS = "staffs.firestaff.secondary.fireticks";
+    public static final String FIRESTAFF_SECONDARY_POTIONEFFECTS = "staffs.firestaff.secondary.potioneffects";
 
     public static final String HEALERSTAFF_NAME = "staffs.healerstaff.name";
     public static final String HEALERSTAFF_DURABILITY = "staffs.healerstaff.durability";

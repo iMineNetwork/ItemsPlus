@@ -20,6 +20,7 @@ public class FireStaffPrimaryEffect extends Effect {
     private static final float FIRESTAFF_PRIMARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.FIRESTAFF_PRIMARY_XP_COST);
     private static final double FIRESTAFF_PRIMARY_VELOCITY_MULTIPLIER = BukkitStarter.getSettings().getDouble(Setting.FIRESTAFF_PRIMARY_VELOCITY_MULTIPLIER);
     private static final float FIRESTAFF_PRIMARY_EXPLODE_POWER = BukkitStarter.getSettings().getFloat(Setting.FIRESTAFF_PRIMARY_EXPLODE_POWER);
+    
 
     public static FireStaffPrimaryEffect setup() {
         return new FireStaffPrimaryEffect(new PlayerEyeSource(), null, false);

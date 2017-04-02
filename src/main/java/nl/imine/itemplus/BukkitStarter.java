@@ -33,7 +33,7 @@ public class BukkitStarter extends JavaPlugin {
     public static Plugin getInstance() {
         return plugin;
     }
-    
+   
     public static Settings getSettings(){
         return settings;
     }

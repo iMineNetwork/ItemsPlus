@@ -44,7 +44,7 @@ public class SeerStaffPrimaryEffect extends Effect {
                 player.setExp(player.getExp() - EXPERIENCE_COST);
             }
         }
-
+       
         //atm it's not possible to make the effects
     }
 }

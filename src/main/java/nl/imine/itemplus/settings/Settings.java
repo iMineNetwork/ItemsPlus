@@ -1,6 +1,10 @@
 package nl.imine.itemplus.settings;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Settings {
 
@@ -23,7 +27,15 @@ public class Settings {
         configuration.addDefault(Setting.FIRESTAFF_DURABILITY, 18);
         configuration.addDefault(Setting.FIRESTAFF_PRIMARY_XP_COST, "0.2f");
         configuration.addDefault(Setting.FIRESTAFF_SECONDARY_XP_COST, "0.2f");
-        //configuration.addDefault(Setting.FIRESTAFF_PRIMARY_PARTICLES, 150);
+        configuration.addDefault(Setting.FIRESTAFF_SECONDARY_FIRETICKS, 100);
+
+        PotionEffect[] FIRESTAFF_SECONDARY_POTIONEFFECTS = {
+            new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, true, false),
+            new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 4, true, false),
+            new PotionEffect(PotionEffectType.SLOW, 60, 255, true, false)
+        };
+
+        configuration.addDefault(Setting.FIRESTAFF_SECONDARY_POTIONEFFECTS, FIRESTAFF_SECONDARY_POTIONEFFECTS);
 
         configuration.addDefault(Setting.HEALERSTAFF_NAME, "HealerStaff");
         configuration.addDefault(Setting.HEALERSTAFF_DURABILITY, 19);
@@ -69,15 +81,24 @@ public class Settings {
     public float getFloat(String configPath) {
         try {
             return Float.parseFloat(configuration.getString(configPath));
-        } catch(NullPointerException ex) {
+        } catch (NullPointerException | NumberFormatException ex) {
             return 0;
-        }catch(Exception ex) {
-            return -1;
         }
     }
 
     public double getDouble(String configPath) {
         return configuration.getDouble(configPath);
+    }
+
+    public PotionEffect[] getPotionEffects(String configPath) {
+        ArrayList<Object> object = (ArrayList<Object>) configuration.get(configPath);
+        PotionEffect[] effects = new PotionEffect[object.size()];
+        
+        for (int i = 0; i < object.size(); i++) {
+            effects[i] = ((PotionEffect) object.get(i));
+        }
+        
+        return effects;
     }
 
 }
