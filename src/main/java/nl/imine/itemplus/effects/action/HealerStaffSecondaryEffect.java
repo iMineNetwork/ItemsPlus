@@ -25,6 +25,9 @@ public class HealerStaffSecondaryEffect extends Effect {
     private static final String HEALERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.HEALERSTAFF_NAME);
     private static final short HEALERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.HEALERSTAFF_DURABILITY);
     private static final float HEALERSTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.HEALERSTAFF_SECONDARY_XP_COST);
+    private static final boolean HEALERSTAFF_SECONDARY_APPLY_TO_SOURCE = BukkitStarter.getSettings().getBoolean(Setting.HEALERSTAFF_SECONDARY_APPLY_TO_SOURCE);
+    private static final boolean HEALERSTAFF_SECONDARY_APPLY_TO_PLAYERS_ONLY = BukkitStarter.getSettings().getBoolean(Setting.HEALERSTAFF_SECONDARY_APPLY_TO_PLAYERS_ONLY);
+    private static final PotionEffect[] HEALERSTAFF_SECONDARY_POTIONEFFECTS = BukkitStarter.getSettings().getPotionEffects(Setting.HEALERSTAFF_SECONDARY_POTIONEFFECTS);
 
     public static HealerStaffSecondaryEffect setup() {
         return new HealerStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
@@ -55,7 +58,10 @@ public class HealerStaffSecondaryEffect extends Effect {
         Location location = source.getSource(player);
 
         List<LivingEntity> targets = target.findTargets(location, player.getWorld().getLivingEntities());
-        targets.remove(player);
+
+        if (!HEALERSTAFF_SECONDARY_APPLY_TO_SOURCE) {
+            targets.remove(player);
+        }
 
         ScheduledFuture[] task = new ScheduledFuture[1];
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -63,12 +69,13 @@ public class HealerStaffSecondaryEffect extends Effect {
         location.getWorld().playSound(location, Sound.BLOCK_SNOW_BREAK, 1.0f, 1.0f);
 
         targets.stream()
-                .filter(target -> target instanceof Player)
+                .filter(target -> target instanceof Player || !HEALERSTAFF_SECONDARY_APPLY_TO_PLAYERS_ONLY)
                 .forEach(target -> {
-                    target.removePotionEffect(PotionEffectType.REGENERATION); //making sure the potionEffect overwrites the old one
-                    target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 80, 2, true, true, Color.RED));
+                    for (PotionEffect effect : HEALERSTAFF_SECONDARY_POTIONEFFECTS) {
+                        player.removePotionEffect(effect.getType());
+                        player.addPotionEffect(effect);
+                    }
                 });
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 0, true, false), true);
 
         location.getWorld().playSound(location, Sound.ITEM_TOTEM_USE, 1.0f, 1.0f);
     }

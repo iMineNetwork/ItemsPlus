@@ -25,6 +25,8 @@ public class IceStaffSecondaryEffect extends Effect {
     private static final String ICESTAFF_NAME = BukkitStarter.getSettings().getString(Setting.ICESTAFF_NAME);
     private static final short ICESTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.ICESTAFF_DURABILITY);
     private static final float ICESTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.ICESTAFF_SECONDARY_XP_COST);
+    private static final PotionEffect[] ICESTAFF_SECONDARY_SOURCE_POTIONEFFECTS = BukkitStarter.getSettings().getPotionEffects(Setting.ICESTAFF_SECONDARY_SOURCE_POTIONEFFECTS);
+    private static final PotionEffect[] ICESTAFF_SECONDARY_TARGET_POTIONEFFECTS = BukkitStarter.getSettings().getPotionEffects(Setting.ICESTAFF_SECONDARY_TARGET_POTIONEFFECTS);
 
     public static IceStaffSecondaryEffect setup() {
         return new IceStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
@@ -63,12 +65,16 @@ public class IceStaffSecondaryEffect extends Effect {
         location.getWorld().playSound(location, Sound.BLOCK_SNOW_BREAK, 1.0f, 1.0f);
 
         targets.forEach(target -> {
-            target.removePotionEffect(PotionEffectType.SLOW); //making sure the potionEffect overwrites the old one
-            target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1, true, true, Color.SILVER));
+            for (PotionEffect effect : ICESTAFF_SECONDARY_TARGET_POTIONEFFECTS) {
+                target.removePotionEffect(effect.getType()); //making sure the potionEffect overwrites the old one
+                target.addPotionEffect(effect);
+            }
+
         });
 
-        player.removePotionEffect(PotionEffectType.SPEED); //making sure the potionEffect overwrites the old one
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 0, true, false), true);
-
+          for (PotionEffect effect : ICESTAFF_SECONDARY_SOURCE_POTIONEFFECTS) {
+            player.removePotionEffect(effect.getType()); //making sure the potionEffect overwrites the old one
+            player.addPotionEffect(effect);
+        }
     }
 }

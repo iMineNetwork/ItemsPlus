@@ -6,6 +6,7 @@ import nl.imine.itemplus.effects.source.EffectSource;
 import nl.imine.itemplus.effects.source.PlayerEyeSource;
 import nl.imine.itemplus.effects.target.EffectTarget;
 import nl.imine.itemplus.settings.Setting;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -22,6 +23,7 @@ public class HealerStaffPrimaryEffect extends Effect {
     private static final String HEALERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.HEALERSTAFF_NAME);
     private static final short HEALERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.HEALERSTAFF_DURABILITY);
     private static final float HEALERSTAFF_PRIMARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.HEALERSTAFF_PRIMARY_XP_COST);
+    private static final PotionEffect[] HEALERSTAFF_PRIMARY_POTIONEFFECTS = BukkitStarter.getSettings().getPotionEffects(Setting.HEALERSTAFF_PRIMARY_POTIONEFFECTS);
 
     public static HealerStaffPrimaryEffect setup() {
         return new HealerStaffPrimaryEffect(new PlayerEyeSource(), null, false);
@@ -49,10 +51,17 @@ public class HealerStaffPrimaryEffect extends Effect {
             }
         }
 
-        Location location = source.getSource(player).add(player.getLocation().getDirection().multiply(1.1));
+        Location location = source.getSource(player);
 
-        player.removePotionEffect(PotionEffectType.ABSORPTION);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 1200, player.getFoodLevel() / 2 - 1, true, true), true);
+        for (PotionEffect effect : HEALERSTAFF_PRIMARY_POTIONEFFECTS) {
+            player.removePotionEffect(effect.getType());
+            if (effect.getType().equals(PotionEffectType.ABSORPTION)) {
+                //modifying the effect so it will be equal to the players foodlevel
+                player.addPotionEffect(new PotionEffect(effect.getType(), effect.getDuration(), player.getFoodLevel() / 2 - 1, effect.isAmbient(), effect.hasParticles(), effect.getColor()));
+                continue;
+            }
+            player.addPotionEffect(effect);
+        }
 
         location.getWorld().playSound(location, Sound.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 1.0f, 1.0f);
     }

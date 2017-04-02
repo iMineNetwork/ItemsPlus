@@ -57,14 +57,6 @@ public class FireStaffSecondaryEffect extends Effect {
                 player.addPotionEffect(effect);
             }
 
-            player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-            player.removePotionEffect(PotionEffectType.SLOW);
-
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, true, false), true);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 4, true, false), true);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255, true, false), true);
-
             if (!player.getGameMode().equals(GameMode.CREATIVE)) {
                 if (player.getExp() < 0.2) {
                     player.setLevel(player.getLevel() - 1);

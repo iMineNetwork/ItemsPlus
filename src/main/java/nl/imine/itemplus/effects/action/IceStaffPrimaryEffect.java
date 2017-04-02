@@ -22,6 +22,7 @@ public class IceStaffPrimaryEffect extends Effect {
     private static final String ICESTAFF_NAME = BukkitStarter.getSettings().getString(Setting.ICESTAFF_NAME);
     private static final short ICESTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.ICESTAFF_DURABILITY);
     private static final float ICESTAFF_PRIMARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.ICESTAFF_PRIMARY_XP_COST);
+    private static final double ICESTAFF_PRIMARY_SNOWBALL_VELOCITY_MULTIPLIER = BukkitStarter.getSettings().getDouble(Setting.ICESTAFF_PRIMARY_SNOWBALL_VELOCITY_MULTIPLIER);
 
     public static IceStaffPrimaryEffect setup() {
         return new IceStaffPrimaryEffect(new PlayerEyeSource(), null, false);
@@ -49,12 +50,12 @@ public class IceStaffPrimaryEffect extends Effect {
             }
         }
 
-        Location location = source.getSource(player).add(player.getLocation().getDirection().multiply(1.1));
+        Location location = source.getSource(player).add(player.getLocation().getDirection().multiply(ICESTAFF_PRIMARY_SNOWBALL_VELOCITY_MULTIPLIER));
         Snowball entity = (Snowball) location.getWorld().spawnEntity(location, EntityType.SNOWBALL);
 
         entity.setShooter(player);
 
-        entity.setVelocity(player.getLocation().getDirection());
+        entity.setVelocity(location.getDirection());
         entity.addScoreboardTag("iceStaffSnowball");
 
         location.getWorld().playSound(location, Sound.BLOCK_SNOW_BREAK, 1.0f, 1.0f);
