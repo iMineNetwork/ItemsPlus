@@ -1,4 +1,4 @@
-package nl.imine.itemplus.effects.action;
+package nl.imine.itemplus.effects.effect;
 
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;

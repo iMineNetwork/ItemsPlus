@@ -1,6 +1,5 @@
-package nl.imine.itemplus.effects.action;
+package nl.imine.itemplus.effects.effect;
 
-import net.md_5.bungee.api.ChatColor;
 import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
@@ -12,18 +11,18 @@ import org.bukkit.GameMode;
 
 import org.bukkit.entity.Player;
 
-public class EnderStaffSecondaryEffect extends Effect {
+public class SeerStaffSecondaryEffect extends Effect {
 
-    private static final String ENDERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.ENDERSTAFF_NAME);
-    private static final short ENDERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.ENDERSTAFF_DURABILITY);
-    private static final float ENDERSTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.ENDERSTAFF_SECONDARY_XP_COST);
+    private static final String SEERSTAFF_NAME = BukkitStarter.getSettings().getString(Setting.SEERSTAFF_NAME);
+    private static final short SEERSTAFF_DURABILITY = BukkitStarter.getSettings().getShort(Setting.SEERSTAFF_DURABILITY);
+    private static final float SEERSTAFF_SECONDARY_XP_COST = BukkitStarter.getSettings().getFloat(Setting.SEERSTAFF_SECONDARY_XP_COST);
 
-    public static EnderStaffSecondaryEffect setup() {
-        return new EnderStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
+    public static SeerStaffSecondaryEffect setup() {
+        return new SeerStaffSecondaryEffect(new PlayerSource(), new CircleAreaOfEffectTarget(3d), true);
     }
 
-    private EnderStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
-        super(source, target, isAlternate, ENDERSTAFF_DURABILITY, ENDERSTAFF_SECONDARY_XP_COST, ENDERSTAFF_NAME);
+    private SeerStaffSecondaryEffect(EffectSource source, EffectTarget target, boolean isAlternate) {
+        super(source, target, isAlternate, SEERSTAFF_DURABILITY, SEERSTAFF_SECONDARY_XP_COST, SEERSTAFF_NAME);
     }
 
     @Override
@@ -44,6 +43,6 @@ public class EnderStaffSecondaryEffect extends Effect {
             }
         }
 
-        player.sendMessage(ChatColor.RED + "This effect has not been implemented yet");
+        //atm it's not possible to make the effects
     }
 }

@@ -7,6 +7,7 @@ package nl.imine.itemplus.commands;
 
 import net.md_5.bungee.api.ChatColor;
 import nl.imine.itemplus.effects.EffectManager;
+import nl.imine.itemplus.staff.StaffManager;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,7 +26,10 @@ public class ItemsplusCommand implements CommandExecutor {
     public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
 
         if (strings.length == 0) {
-            cs.sendMessage(ChatColor.RED + "valid subcommands: getitems.");
+            cs.sendMessage(ChatColor.RED + "valid subcommands:\n"
+                    + "   getitems \n"
+                    + "   reload \n"
+                    + "   printstaffs");
             return true;
         }
 
@@ -34,6 +38,17 @@ public class ItemsplusCommand implements CommandExecutor {
             return true;
         }
 
+        if (strings[0].equalsIgnoreCase("reload")) {
+            reload();
+            return true;
+        }
+
+        if (strings[0].equalsIgnoreCase("printstaffs")) {
+            printStaffs();
+            return true;
+        }
+
+        cs.sendMessage("subcommand not found");
         return true;
     }
 
@@ -60,4 +75,17 @@ public class ItemsplusCommand implements CommandExecutor {
         player.getInventory().addItem(items);
     }
 
+    private void reload() {
+        StaffManager.loadStaffsFromConfig();
+    }
+
+    private void printStaffs() {
+        StaffManager.getInstance().getStaffs().forEach(staff -> {
+            System.out.println(staff.getName()
+                    + ", "
+                    + staff.getPrimaryActions().toString()
+                    + ", "
+                    + staff.getSecondaryActions().toString());
+        });
+    }
 }

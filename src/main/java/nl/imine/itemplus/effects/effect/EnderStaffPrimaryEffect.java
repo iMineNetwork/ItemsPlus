@@ -1,4 +1,4 @@
-package nl.imine.itemplus.effects.action;
+package nl.imine.itemplus.effects.effect;
 
 import java.util.HashSet;
 import nl.imine.itemplus.BukkitStarter;
@@ -62,6 +62,7 @@ public class EnderStaffPrimaryEffect extends Effect {
         destination.setYaw(player.getLocation().getYaw());
 
         player.teleport(destination);
+        player.damage(1);
 
         Location particleLocation = new Location(destination.getWorld(), destination.getX(), destination.getY() - 1, destination.getZ());
         player.getWorld().spawnParticle(Particle.DRAGON_BREATH, particleLocation, ENDERSTAFF_PARTICLES, 0, 0, 0, 0.1);

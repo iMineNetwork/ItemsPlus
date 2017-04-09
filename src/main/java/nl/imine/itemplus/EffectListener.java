@@ -67,15 +67,22 @@ public class EffectListener implements Listener {
                     Player player = (Player) evt.getPlayer();
 
                     if (bowCooldown.contains(player)) {
+                        player.sendTitle("Still on cooldown", "", 0, 20, 0);
                         return;
                     }
-
+                    
                     //checks if the player has an arrow to shoot and removes it from his inventory
-                    for (ItemStack item : player.getInventory().getContents()) {
-                        if (item.getType() == Material.ARROW) {
+                    boolean hasArrow = false;
+                    for (ItemStack item : player.getInventory().getContents()){
+                        if (item != null && item.getType() == Material.ARROW) {
+                            hasArrow = true;
                             item.setAmount(item.getAmount() - 1);
                             break;
                         }
+                    }
+
+                    if (!hasArrow) {
+                        player.sendTitle("You don't have an arrow", "", 0, 20, 0);
                         return;
                     }
 
@@ -83,7 +90,7 @@ public class EffectListener implements Listener {
 
                     Arrow arrow = (Arrow) location.getWorld().spawnEntity(location, EntityType.ARROW);
                     arrow.setShooter(player);
-                    arrow.setVelocity(player.getLocation().getDirection().multiply(2));
+                    arrow.setVelocity(player.getLocation().getDirection().multiply(5));
 
                     bowCooldown.add(player);
                     Bukkit.getScheduler().scheduleSyncDelayedTask(BukkitStarter.getInstance(), () -> {

@@ -1,4 +1,4 @@
-package nl.imine.itemplus.effects.action;
+package nl.imine.itemplus.effects.effect;
 
 import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
@@ -50,12 +50,13 @@ public class IceStaffPrimaryEffect extends Effect {
             }
         }
 
-        Location location = source.getSource(player).add(player.getLocation().getDirection().multiply(ICESTAFF_PRIMARY_SNOWBALL_VELOCITY_MULTIPLIER));
+        Location location = source.getSource(player).add(player.getLocation().getDirection().multiply(1.1));
         Snowball entity = (Snowball) location.getWorld().spawnEntity(location, EntityType.SNOWBALL);
 
         entity.setShooter(player);
-
-        entity.setVelocity(location.getDirection());
+        
+        entity.setVelocity(location.getDirection().multiply(ICESTAFF_PRIMARY_SNOWBALL_VELOCITY_MULTIPLIER));
+        
         entity.addScoreboardTag("iceStaffSnowball");
 
         location.getWorld().playSound(location, Sound.BLOCK_SNOW_BREAK, 1.0f, 1.0f);

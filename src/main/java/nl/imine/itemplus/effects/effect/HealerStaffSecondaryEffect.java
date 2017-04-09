@@ -1,4 +1,4 @@
-package nl.imine.itemplus.effects.action;
+package nl.imine.itemplus.effects.effect;
 
 import nl.imine.itemplus.effects.Effect;
 import nl.imine.itemplus.effects.source.EffectSource;
@@ -77,6 +77,6 @@ public class HealerStaffSecondaryEffect extends Effect {
                     }
                 });
 
-        location.getWorld().playSound(location, Sound.ITEM_TOTEM_USE, 1.0f, 1.0f);
+        location.getWorld().playSound(location, Sound.ITEM_TOTEM_USE, 1.0f, 2.0f);
     }
 }

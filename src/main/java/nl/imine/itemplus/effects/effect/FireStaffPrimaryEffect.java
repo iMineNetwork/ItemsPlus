@@ -1,4 +1,4 @@
-package nl.imine.itemplus.effects.action;
+package nl.imine.itemplus.effects.effect;
 
 import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
@@ -33,11 +33,11 @@ public class FireStaffPrimaryEffect extends Effect {
     @Override
     public void applyEffect(Player player) {
         if (player.getExp() >= FIRESTAFF_PRIMARY_XP_COST || player.getLevel() >= 1 || player.getGameMode().equals(GameMode.CREATIVE)) {
-            Location origin = source.getSource(player).add(player.getLocation().getDirection().multiply(FIRESTAFF_PRIMARY_VELOCITY_MULTIPLIER));
+            Location origin = source.getSource(player).add(player.getLocation().getDirection().multiply(1.1));
             Fireball entity = (Fireball) origin.getWorld().spawnEntity(origin, EntityType.FIREBALL);
             entity.setYield(FIRESTAFF_PRIMARY_EXPLODE_POWER);
             entity.setShooter(player);
-            entity.setVelocity(player.getLocation().getDirection());
+            entity.setVelocity(player.getLocation().getDirection().multiply(FIRESTAFF_PRIMARY_VELOCITY_MULTIPLIER));
 
             origin.getWorld().playSound(origin, Sound.ITEM_FIRECHARGE_USE, 1.0f, 1.0f);
 

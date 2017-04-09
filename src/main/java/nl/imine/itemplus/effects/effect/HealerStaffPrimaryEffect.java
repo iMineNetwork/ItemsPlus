@@ -1,4 +1,4 @@
-package nl.imine.itemplus.effects.action;
+package nl.imine.itemplus.effects.effect;
 
 import nl.imine.itemplus.BukkitStarter;
 import nl.imine.itemplus.effects.Effect;
@@ -9,6 +9,7 @@ import nl.imine.itemplus.settings.Setting;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -35,7 +36,7 @@ public class HealerStaffPrimaryEffect extends Effect {
 
     @Override
     public void applyEffect(Player player) {
-        if (player.getExp() < EXPERIENCE_COST && player.getLevel() < 1 && !player.getGameMode().equals(GameMode.CREATIVE)) {
+        if (player.getExp() < EXPERIENCE_COST && player.getLevel() < 1 && !player.getGameMode().equals(GameMode.CREATIVE) || player.getFoodLevel() <= 0) {
             return;
         }
 
@@ -56,13 +57,15 @@ public class HealerStaffPrimaryEffect extends Effect {
         for (PotionEffect effect : HEALERSTAFF_PRIMARY_POTIONEFFECTS) {
             player.removePotionEffect(effect.getType());
             if (effect.getType().equals(PotionEffectType.ABSORPTION)) {
-                //modifying the effect so it will be equal to the players foodlevel
-                player.addPotionEffect(new PotionEffect(effect.getType(), effect.getDuration(), player.getFoodLevel() / 2 - 1, effect.isAmbient(), effect.hasParticles(), effect.getColor()));
+                //modifying the effect so it will be equal to the players foodlevel-
+                player.addPotionEffect(new PotionEffect(effect.getType(), effect.getDuration(), player.getFoodLevel() / 4 - 1, effect.isAmbient(), effect.hasParticles(), effect.getColor()));
                 continue;
             }
             player.addPotionEffect(effect);
         }
+        player.setFoodLevel(player.getFoodLevel() - 1);
 
         location.getWorld().playSound(location, Sound.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 1.0f, 1.0f);
+        location.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 50, 0.5, 1, 0.5, 0.1);
     }
 }

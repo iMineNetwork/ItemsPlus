@@ -1,19 +1,19 @@
 package nl.imine.itemplus.effects;
 
-import nl.imine.itemplus.effects.action.FireStaffPrimaryEffect;
-import nl.imine.itemplus.effects.action.FireStaffSecondaryEffect;
+import nl.imine.itemplus.effects.effect.FireStaffPrimaryEffect;
+import nl.imine.itemplus.effects.effect.FireStaffSecondaryEffect;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import nl.imine.itemplus.effects.action.EnderStaffPrimaryEffect;
-import nl.imine.itemplus.effects.action.EnderStaffSecondaryEffect;
-import nl.imine.itemplus.effects.action.HealerStaffPrimaryEffect;
-import nl.imine.itemplus.effects.action.HealerStaffSecondaryEffect;
-import nl.imine.itemplus.effects.action.IceStaffPrimaryEffect;
-import nl.imine.itemplus.effects.action.IceStaffSecondaryEffect;
-import nl.imine.itemplus.effects.action.SeerStaffPrimaryEffect;
-import nl.imine.itemplus.effects.action.SeerStaffSecondaryEffect;
+import nl.imine.itemplus.effects.effect.EnderStaffPrimaryEffect;
+import nl.imine.itemplus.effects.effect.EnderStaffSecondaryEffect;
+import nl.imine.itemplus.effects.effect.HealerStaffPrimaryEffect;
+import nl.imine.itemplus.effects.effect.HealerStaffSecondaryEffect;
+import nl.imine.itemplus.effects.effect.IceStaffPrimaryEffect;
+import nl.imine.itemplus.effects.effect.IceStaffSecondaryEffect;
+import nl.imine.itemplus.effects.effect.SeerStaffPrimaryEffect;
+import nl.imine.itemplus.effects.effect.SeerStaffSecondaryEffect;
 
 public class EffectManager {
 
