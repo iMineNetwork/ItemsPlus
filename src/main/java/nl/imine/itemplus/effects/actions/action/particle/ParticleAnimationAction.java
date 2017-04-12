@@ -5,7 +5,6 @@
  */
 package nl.imine.itemplus.effects.actions.action.particle;
 
-import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -49,7 +48,7 @@ public class ParticleAnimationAction implements Action, ConfigurationSerializabl
     }
 
     @Override
-    public void start() {
+    public void execute() {
         ScheduledFuture[] task = new ScheduledFuture[1];
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         task[0] = scheduledExecutorService.scheduleWithFixedDelay(new ParticleAnimation(task, location, target.getEffectArea(location, amount), particle, aantalParticles), initialDelay, delay, timeUnit);

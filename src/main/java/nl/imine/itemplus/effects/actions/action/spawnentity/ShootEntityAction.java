@@ -61,7 +61,7 @@ public class ShootEntityAction implements Action, ConfigurationSerializable {
     }
 
     @Override
-    public void start() {
+    public void execute() {
         Entity entity = (Entity) location.getWorld().spawnEntity(location, entityType);
         entity.setVelocity(location.getDirection().multiply(velocity));
         entity.addScoreboardTag(scoreboardTag);

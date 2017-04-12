@@ -37,7 +37,7 @@ public class PotionEffectNearbyAction implements Action, ConfigurationSerializab
     }
 
     @Override
-    public void start() {
+    public void execute() {
         targets.stream()
                 .filter(target -> target instanceof Player || !playersOnly)
                 .forEach(target -> {

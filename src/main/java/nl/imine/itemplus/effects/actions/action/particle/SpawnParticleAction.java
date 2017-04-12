@@ -19,33 +19,26 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 public class SpawnParticleAction implements Action, ConfigurationSerializable {
 
     Location location;
-    Particle p;
+    Particle particle;
     int amount;
 
-    public SpawnParticleAction(Location location, Particle p,int amount) {
+    public SpawnParticleAction(Location location, Particle particle, int amount) {
         this.location = location;
-        this.p = p;
+        this.particle = particle;
         this.amount = amount;
     }
 
-    
     @Override
-    public void start() {
-        location.getWorld().spawnParticle(p, location, amount);
+    public void execute() {
+        location.getWorld().spawnParticle(particle, location, amount);
     }
 
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> map = new HashMap<>();
         map.put("Location", location);
-        map.put("target", target);
-        map.put("particle", particle);
+        map.put("Particle", particle);
         map.put("amount", amount);
-        map.put("aantal_particles", aantalParticles);
-        map.put("initialDelay", initialDelay);
-        map.put("delay", delay);
-        map.put("timeUnit", timeUnit);
-
         return map;
     }
 

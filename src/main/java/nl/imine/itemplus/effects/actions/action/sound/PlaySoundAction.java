@@ -32,7 +32,7 @@ public class PlaySoundAction implements Action, ConfigurationSerializable {
     }
 
     @Override
-    public void start() {
+    public void execute() {
 
         location.getWorld().playSound(location, sound, 1.0f, 1.0f);
     }

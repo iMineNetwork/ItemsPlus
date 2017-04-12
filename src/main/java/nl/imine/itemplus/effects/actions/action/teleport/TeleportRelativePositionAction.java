@@ -28,7 +28,7 @@ public class TeleportRelativePositionAction implements Action, ConfigurationSeri
     }
 
     @Override
-    public void start() {
+    public void execute() {
         targets.forEach(target -> {
             Location targetLocation = new Location(
                     target.getLocation().getWorld(),

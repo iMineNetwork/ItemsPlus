@@ -28,7 +28,7 @@ public class TeleportFixedPositionAction implements Action, ConfigurationSeriali
     }
 
     @Override
-    public void start() {
+    public void execute() {
         targets.forEach(target -> target.teleport(location, TeleportCause.PLUGIN));
     }
 

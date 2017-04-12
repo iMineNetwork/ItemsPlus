@@ -10,24 +10,21 @@ public class BukkitStarter extends JavaPlugin {
 
     private static Plugin plugin;
     private static Settings settings;
-    private StaffManager sm;
+//    private StaffManager sm;
 
     @Override
     public void onEnable() {
-        sm = StaffManager.getInstance();
-        System.out.println("[ITEMS+] 1");
+
         plugin = this;
-        System.out.println("[ITEMS+] 2");
-        BukkitStarter.settings = new Settings(this.getConfig());
-        System.out.println("[ITEMS+] 3");
+
+        settings = new Settings(this.getConfig());
+
         setUpConfig();
-        System.out.println("[ITEMS+] 3.5");
         StaffManager.loadStaffsFromConfig();
-        System.out.println("[ITEMS+] 4");
-        EffectListener.init();
-        System.out.println("[ITEMS+] 5");
+
+//        EffectListener.init();
         this.getCommand("itemsplus").setExecutor(new ItemsplusCommand());
-        System.out.println("[ITEMS+] 6");
+
     }
 
     @Override
