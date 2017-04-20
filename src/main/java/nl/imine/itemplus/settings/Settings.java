@@ -1,6 +1,8 @@
 package nl.imine.itemplus.settings;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import nl.imine.itemplus.staff.Staff;
 import nl.imine.itemplus.staff.StaffManager;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -83,7 +85,8 @@ public class Settings {
 //        configuration.addDefault(Setting.SEERSTAFF_PRIMARY_PARTICLES, 150);
 //        configuration.addDefault(Setting.SEERSTAFF_SECONDARY_XP_COST, "0.2f");
 
-        configuration.addDefault("staffs", StaffManager.getInstance().getStaffs().toArray());
+        Map<String, Object> map = new HashMap<>();
+        StaffManager.getInstance().getStaffs().forEach(staff -> configuration.addDefault(staff.getName(), staff));
 
         configuration.options().copyDefaults(true);
     }

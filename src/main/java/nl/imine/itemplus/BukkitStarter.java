@@ -16,7 +16,6 @@ public class BukkitStarter extends JavaPlugin {
     public void onEnable() {
 
         plugin = this;
-
         settings = new Settings(this.getConfig());
 
         setUpConfig();

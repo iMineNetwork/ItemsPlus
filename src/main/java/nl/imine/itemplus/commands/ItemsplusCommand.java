@@ -81,11 +81,11 @@ public class ItemsplusCommand implements CommandExecutor {
 
     private void printStaffs() {
         StaffManager.getInstance().getStaffs().forEach(staff -> {
-            System.out.println(staff.getName()
-                    + ", "
-                    + staff.getPrimaryActions().toString()
-                    + ", "
-                    + staff.getSecondaryActions().toString());
+            System.out.println(staff.getName());
+//                    + ", "
+//                    + staff.getPrimaryActions().toString()
+//                    + ", "
+//                    + staff.getSecondaryActions().toString());
         });
     }
 }
